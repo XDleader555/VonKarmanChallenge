@@ -101,12 +101,15 @@ void joystickCallback(const sensor_msgs::Joy& joy) {
   const int RightJoyStickIndex = 4;
 
   //Maximum range set for the motors
-  const int MotorOutputRange = 200;
+  int MotorOutputRange = 200;
 
   /* Check if we press the RB Button */
   if(joy.buttons[5] && millis() - eMag_watchdog > 500) {
-    eMag->toggle();
-
+    //eMag->toggle();
+    if(MotorOutputRange == 200)
+      MotorOutputRange = 255;
+    else
+      MotorOutputRange = 200;
     /* Reset the button debounce */
     eMag_watchdog = millis();
   }
